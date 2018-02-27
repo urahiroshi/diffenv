@@ -28,3 +28,8 @@ make setup
 # execute command and compare directory
 make abdiff
 ```
+
+# tips
+
+If you changed `Alice` directory and want to make same change to `Bob` directory, you can use `make atob` command.
+(`make btoa` is reverse command (Bob => Alice))

@@ -17,6 +17,7 @@ $name:
 T_MAKEFILE='''
 .PHONY: setup
 setup:
+  mkdir -p $a_name $b_name
 	git clone --depth 1 -b $a_branch git@github.com:$repo.git $a_name/src
 	git clone --depth 1 -b $b_branch git@github.com:$repo.git $b_name/src
 
@@ -42,6 +43,16 @@ bdiff:
 	docker-compose up $b_name
 	find $b_name/src/$compare -type f -exec md5 {} \; > $b_name/_compare2.md5
 	diff $b_name/_compare1.md5 $b_name/_compare2.md5
+
+.PHONY: atob
+atob:
+	(cd $a_name/src && git diff > ../repo.diff)
+	(cd $b_name/src && patch -N -p 1 < ../../$a_name/repo.diff)
+
+.PHONY: btoa
+btoa:
+	(cd $b_name/src && git diff > ../repo.diff)
+	(cd $a_name/src && patch -N -p 1 < ../../$b_name/repo.diff)
 '''
 
 def generate_makefile(a_name, b_name, a_branch, b_branch, repo, compare):
