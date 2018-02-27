@@ -46,7 +46,14 @@ bdiff:
 
 def generate_makefile(a_name, b_name, a_branch, b_branch, repo, compare):
   template = Template(T_MAKEFILE)
-  return template.substitute(a_name=a_name, b_name=b_name, a_branch=a_branch, b_branch=b_branch, repo=repo, compare=compare)
+  return template.substitute(
+    a_name=a_name,
+    b_name=b_name,
+    a_branch=a_branch,
+    b_branch=b_branch,
+    repo=repo,
+    compare=compare
+  )
 
 def generate_docker_compose(a_name, b_name, a_image, b_image, command):
   template = Template(T_DOCKER_COMPOSE)
@@ -67,9 +74,22 @@ def main():
   parser.add_argument('--b-name', dest='b_name', help="B's name", default=B_NAME)
   args = parser.parse_args()
   with open('Makefile', 'w') as f:
-    f.write(generate_makefile(a_name=args.a_name, b_name=args.b_name, a_branch=args.a_branch, b_branch=args.b_branch, repo=args.repo, compare=args.compare))
+    f.write(generate_makefile(
+      a_name=args.a_name,
+      b_name=args.b_name,
+      a_branch=args.a_branch,
+      b_branch=args.b_branch,
+      repo=args.repo,
+      compare=args.compare
+    ))
   with open('docker-compose.yml', 'w') as f:
-    f.write(generate_docker_compose(a_name=args.a_name, b_name=args.b_name, a_image=args.a_image, b_image=args.b_image, command=args.command))
+    f.write(generate_docker_compose(
+      a_name=args.a_name,
+      b_name=args.b_name,
+      a_image=args.a_image,
+      b_image=args.b_image,
+      command=args.command
+    ))
 
 if __name__ == '__main__':
   main()
