@@ -24,24 +24,24 @@ setup:
 .PHONY: abdiff
 abdiff:
 	docker-compose up
-	find $a_name/src/$compare -type f -exec md5 {} \; > $a_name/_compare.md5
-	find $b_name/src/$compare -type f -exec md5 {} \; > $b_name/_compare.md5
+	(cd $a_name/src && find $compare -type f -exec md5 {} \;) > $a_name/_compare.md5
+	(cd $b_name/src && find $compare -type f -exec md5 {} \;) > $b_name/_compare.md5
 	diff $a_name/_compare.md5 $b_name/_compare.md5
 
 .PHONY: adiff
 adiff:
 	docker-compose up $a_name
-	find $a_name/src/$compare -type f -exec md5 {} \; > $a_name/_compare1.md5
+	(cd $a_name/src && find $compare -type f -exec md5 {} \;) > $a_name/_compare1.md5
 	docker-compose up $a_name
-	find $a_name/src/$compare -type f -exec md5 {} \; > $a_name/_compare2.md5
+	(cd $a_name/src && find $compare -type f -exec md5 {} \;) > $a_name/_compare2.md5
 	diff $a_name/_compare1.md5 $a_name/_compare2.md5
 
 .PHONY: bdiff
 bdiff:
 	docker-compose up $b_name
-	find $b_name/src/$compare -type f -exec md5 {} \; > $b_name/_compare1.md5
+	(cd $b_name/src && find $compare -type f -exec md5 {} \;) > $b_name/_compare1.md5
 	docker-compose up $b_name
-	find $b_name/src/$compare -type f -exec md5 {} \; > $b_name/_compare2.md5
+	(cd $b_name/src && find $compare -type f -exec md5 {} \;) > $b_name/_compare2.md5
 	diff $b_name/_compare1.md5 $b_name/_compare2.md5
 
 .PHONY: atob
