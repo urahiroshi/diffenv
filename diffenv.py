@@ -17,7 +17,7 @@ $name:
 T_MAKEFILE='''
 .PHONY: setup
 setup:
-  mkdir -p $a_name $b_name
+	mkdir -p $a_name $b_name
 	git clone --depth 1 -b $a_branch git@github.com:$repo.git $a_name/src
 	git clone --depth 1 -b $b_branch git@github.com:$repo.git $b_name/src
 
